@@ -1,0 +1,28 @@
+.header {
+  background-color: #c6caf1;
+  /* position: fixed; */
+  top: 0;
+  /* width: 100%; */
+  display: flex;
+  padding: 10px;
+  max-height: 15vh;
+}
+
+.left-flex {
+  flex-shrink: 0;
+  margin-left: 0.8rem;
+}
+.center-flex {
+  flex: 1 1 0%;
+}
+.right-flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1.2rem;
+}
+
+.login {
+  text-decoration: none;
+}

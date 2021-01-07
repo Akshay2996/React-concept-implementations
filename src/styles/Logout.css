@@ -1,0 +1,13 @@
+/* .logout-box {
+  display: block;
+  width: 15px;
+  height: 10px;
+} */
+
+.logout-button {
+  float: right;
+  color: #fff;
+  background-color: #e52b50;
+  outline: none;
+  border-radius: 5px;
+}

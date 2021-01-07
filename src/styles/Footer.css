@@ -1,0 +1,11 @@
+.bottom {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #c6caf1;
+    color: rgb(41, 31, 179);
+    text-align: center;
+    padding: 20px;
+    max-height: 5vh;
+  }
