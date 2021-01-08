@@ -8,21 +8,21 @@ import UserDetails from "./components/UserDetails";
 import Navbar from "./components/Navbar";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  // const [loggedIn, setLoggedIn] = useState(true);
 
-  const handleLogin = () => {
-    setLoggedIn({ loggedIn: !loggedIn });
-    console.log(loggedIn);
-  };
+  // const handleLogin = () => {
+  //   setLoggedIn({ loggedIn: !loggedIn });
+  //   console.log(loggedIn);
+  // };
   return (
     <Router>
       <div className="App">
-        <Navbar loggedIn={loggedIn} handleLogin={handleLogin} />
         <Route
           exact
           path="/"
           render={() => (
             <div>
+              <Navbar value={"login"} />
               <Home />
             </div>
           )}
@@ -37,8 +37,33 @@ function App() {
             />
           )}
         /> */}
-        <Route path="/login" component={Form} />
-        <Route exact path="/user/:email" render={() => <UserDetails />} />
+        {/* <Route path="/login" component={Form} /> */}
+        <Route
+          path="/login"
+          render={({ history }) => (
+            <div>
+              <Navbar value={"login"} />
+              <Form
+                onRoute={(email) => {
+                  history.push(`/user/${email}`);
+                }}
+              />
+            </div>
+          )}
+        />
+        {/* <form onRoute={(email) => {
+          this.history.push(`/users/${this.state.email}`)
+        }} */}
+        <Route
+          exact
+          path="/user/:email"
+          render={() => (
+            <div>
+              <Navbar value={"loggedin"} />
+              <UserDetails />
+            </div>
+          )}
+        />
         {/* <Route path="/user" component={UserDetails} /> */}
         <Footer />
       </div>

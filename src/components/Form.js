@@ -28,6 +28,9 @@ export default class Form extends Component {
         password: "",
       },
     };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange = (e) => {
@@ -57,8 +60,9 @@ export default class Form extends Component {
 
     if (formValid(this.state)) {
       if (password.length >= 6 && email !== null) {
-        this.props.history.push(`/user/${this.state.email}`);
+        // this.props.history.push(`/user/${this.state.email}`);
         console.log("Form submitted", this.state);
+        this.props.onRoute(email);
       } else {
         console.log("Error submitting form");
       }
