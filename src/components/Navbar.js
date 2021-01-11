@@ -8,8 +8,8 @@ import Logout from "./Logout";
 
 export default class Navbar extends Component {
   render() {
-    const login = this.props.loggedIn;
-    console.log(login);
+    // const login = this.props.loggedIn;
+    // console.log(login);
     if (this.props.value === "login") {
       return (
         <>

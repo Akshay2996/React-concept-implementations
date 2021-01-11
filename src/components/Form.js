@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import "../styles/Form.css";
 
 const emailRegex = RegExp(
@@ -15,14 +15,13 @@ const formValid = ({ formErrors }) => {
   return valid;
 };
 
-export default class Form extends Component {
+class Form extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       email: "",
       password: "",
-      loggedIn: false,
       formErrors: {
         email: "",
         password: "",
@@ -69,54 +68,61 @@ export default class Form extends Component {
     } else {
       console.error(`Error`);
     }
-    // this.props.history.push({
-    //   pathname: "/page",
-    //   data: this.state,
-    // });
   };
+
+  componentDidMount() {
+    console.log("Component Mounted");
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("component updated");
+    console.log(prevProps, prevState);
+  }
 
   render() {
     const { email, password, formErrors } = this.state;
     return (
-        <div className="wrapper">
-          <Link to="/" className="back">
-            Back
-          </Link>
-          <div className="form-wrapper">
-            <h1>Login</h1>
-            <form onSubmit={this.handleSubmit} noValidate>
-              <div className="email">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={email}
-                  noValidate
-                  onChange={this.handleChange}
-                />
-                {formErrors.email.length > 0 && (
-                  <span className="errorMessage">{formErrors.email}</span>
-                )}
-              </div>
-              <div className="password">
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  value={password}
-                  noValidate
-                  onChange={this.handleChange}
-                />
-                {formErrors.password.length > 0 && (
-                  <span className="errorMessage">{formErrors.password}</span>
-                )}
-              </div>
-              <div className="createAccount">
-                <button type="submit">Login</button>
-              </div>
-            </form>
-          </div>
+      <div className="wrapper">
+        <Link to="/" className="back">
+          Back
+        </Link>
+        <div className="form-wrapper">
+          <h1>Login</h1>
+          <form onSubmit={this.handleSubmit} noValidate>
+            <div className="email">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                name="email"
+                value={email}
+                noValidate
+                onChange={this.handleChange}
+              />
+              {formErrors.email.length > 0 && (
+                <span className="errorMessage">{formErrors.email}</span>
+              )}
+            </div>
+            <div className="password">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                name="password"
+                value={password}
+                noValidate
+                onChange={this.handleChange}
+              />
+              {formErrors.password.length > 0 && (
+                <span className="errorMessage">{formErrors.password}</span>
+              )}
+            </div>
+            <div className="createAccount">
+              <button type="submit">Login</button>
+            </div>
+          </form>
         </div>
+      </div>
     );
   }
 }
+
+export default Form;
