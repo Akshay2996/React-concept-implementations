@@ -50,7 +50,7 @@ export default class Navbar extends Component {
             <div className="center-flex"></div>
             <div className="right-flex">
               <img src={initialphoto} alt="Profile" style={{ width: "64px" }} />
-              <Logout />
+              <Logout value={"login"} />
             </div>
           </div>
         </>

@@ -1,5 +1,5 @@
 /* .user-details {
-  height: 80vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -7,8 +7,10 @@
 } */
 .add-user {
   text-decoration: none;
+}
+.add-user button {
   cursor: pointer;
-  /* margin: 2rem auto; */
+  margin: 2rem auto;
 }
 
 .table {
@@ -17,6 +19,7 @@
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
+  margin-bottom: 3rem;
   /* display: block; */
 }
 

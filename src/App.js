@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import UserDetails from "./components/UserDetails";
 import Navbar from "./components/Navbar";
 import AddUser from "./components/AddUser";
+import axios from "axios";
 
 function App() {
   const userDetails = [
@@ -40,9 +41,26 @@ function App() {
     setUsers([...users, useradded]);
   };
 
-  useEffect(() => {
-    console.log("useEffect ran");
-  }, []);
+  // useEffect(() => {
+  //   console.log("useEffect ran");
+  //   const config = {
+  //     url: "https://localhost:5000/api/user",
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   };
+  //   axios(config)
+  //     .then((response) => {
+  //       console.log(response);
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       console.log(data);
+  //       setUsers(data);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }, []);
 
   return (
     <Router>
@@ -54,30 +72,17 @@ function App() {
             <div>
               <Navbar value={"login"} />
               <Home />
+              <Footer />
             </div>
           )}
         />
-        {/* <Route
-          path="/login"
-          render={({ history }) => (
-            <Form
-              onRoute={() => {
-                history.push("/user");
-              }}
-            />
-          )}
-        /> */}
-        {/* <Route path="/login" component={Form} /> */}
         <Route
           path="/login"
           render={({ history }) => (
             <div>
               <Navbar value={"login"} />
-              <Form
-                onRoute={(email) => {
-                  history.push(`/user`);
-                }}
-              />
+              <Form history={history} />
+              <Footer />
             </div>
           )}
         />
@@ -105,7 +110,6 @@ function App() {
             </div>
           )}
         />
-        <Footer />
       </div>
     </Router>
   );

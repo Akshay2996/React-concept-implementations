@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { withRouter, Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import "../styles/Form.css";
+import axios from "axios";
 
 const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -18,10 +19,16 @@ const formValid = ({ formErrors }) => {
 class Form extends Component {
   constructor(props) {
     super(props);
+    let loggedIn = false;
+    const token = localStorage.getItem("token");
+    if (token) {
+      loggedIn = true;
+    }
 
     this.state = {
       email: "",
       password: "",
+      loggedIn,
       formErrors: {
         email: "",
         password: "",
@@ -49,7 +56,8 @@ class Form extends Component {
       default:
         break;
     }
-    this.setState({ formErrors, [name]: value }, () => console.log(this.state));
+    this.setState({ formErrors, [name]: value });
+    // this.setState({ formErrors, [name]: value }, () => console.log(this.state));
   };
 
   handleSubmit = (e) => {
@@ -59,9 +67,18 @@ class Form extends Component {
 
     if (formValid(this.state)) {
       if (password.length >= 6 && email !== null) {
-        // this.props.history.push(`/user/${this.state.email}`);
-        console.log("Form submitted", this.state);
-        this.props.onRoute(email);
+        const config = {
+          url: "http://localhost:5000/api/user/login",
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        axios(config).then((res) => {
+          // console.log(res.data);
+          localStorage.setItem("token", JSON.stringify(res.data.token));
+          this.props.history.push("/user");
+        });
       } else {
         console.log("Error submitting form");
       }
@@ -72,15 +89,19 @@ class Form extends Component {
 
   componentDidMount() {
     console.log("Component Mounted");
+    // localStorage.setItem("token", JSON.stringify(res.data.token));
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    console.log("component updated");
-    console.log(prevProps, prevState);
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log("component updated");
+  //   console.log(prevProps, prevState);
+  // }
 
   render() {
-    const { email, password, formErrors } = this.state;
+    const { email, password, formErrors, loggedIn } = this.state;
+    if (loggedIn) {
+      return <Redirect to="/user" />;
+    }
     return (
       <div className="wrapper">
         <Link to="/" className="back">
