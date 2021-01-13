@@ -8,7 +8,6 @@ export default function AddUser(props) {
     const name = e.target.elements.name.value;
     // console.log(imageLink, name);
     const user = {
-      id: Number(new Date()),
       name: name,
       imageLink: imageLink,
     };

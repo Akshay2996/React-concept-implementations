@@ -76,7 +76,7 @@ class Form extends Component {
         };
         axios(config).then((res) => {
           // console.log(res.data);
-          localStorage.setItem("token", JSON.stringify(res.data.token));
+          localStorage.setItem("token", res.data.token);
           this.props.history.push("/user");
         });
       } else {
@@ -90,6 +90,9 @@ class Form extends Component {
   componentDidMount() {
     console.log("Component Mounted");
     // localStorage.setItem("token", JSON.stringify(res.data.token));
+  }
+  componentWillUnmount() {
+    console.log("Successfully UnMounted");
   }
 
   // componentDidUpdate(prevProps, prevState) {

@@ -7,7 +7,6 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import UserDetails from "./components/UserDetails";
 import Navbar from "./components/Navbar";
 import AddUser from "./components/AddUser";
-import axios from "axios";
 
 function App() {
   const userDetails = [
@@ -30,7 +29,7 @@ function App() {
         "https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/javascript/javascript.png",
     },
   ];
-  const [users, setUsers] = useState(userDetails);
+  const [users, setUsers] = useState([]);
 
   const handleDelete = (id) => {
     const newUser = users.filter((user) => user.id !== id);
@@ -40,27 +39,6 @@ function App() {
   const addUser = (useradded) => {
     setUsers([...users, useradded]);
   };
-
-  // useEffect(() => {
-  //   console.log("useEffect ran");
-  //   const config = {
-  //     url: "https://localhost:5000/api/user",
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   };
-  //   axios(config)
-  //     .then((response) => {
-  //       console.log(response);
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       console.log(data);
-  //       setUsers(data);
-  //     })
-  //     .catch((error) => console.log(error));
-  // }, []);
 
   return (
     <Router>
