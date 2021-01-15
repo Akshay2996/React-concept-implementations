@@ -20,11 +20,10 @@ function UserDetails(props) {
 
   useEffect(() => {
     console.log("useEffect ran");
-    console.log(token);
     if (token === null) {
       setLoggedIn(false);
       console.log("Token is not provided");
-      console.log(loggedIn);
+      // console.log(loggedIn);
     }
     const config = {
       url: "http://localhost:5000/api/user",
@@ -37,10 +36,25 @@ function UserDetails(props) {
     axios(config)
       .then((response) => {
         console.log(response.data);
-        // setUsers(response.data);
+        props.onUserData(response.data);
       })
       .catch((error) => console.log(error));
   }, [token, loggedIn]);
+
+  const deleteUser = (id) => {
+    const config = {
+      url: `http://localhost:5000/api/user/${id}`,
+      method: "DELETE",
+      headers: {
+        authorization: token,
+        "Content-Type": "application/json",
+      },
+    };
+    axios(config).then((response) => {
+      // console.log(response.data);
+      props.handleDelete(response.data.id);
+    });
+  };
 
   // render() {
   //   if (this.state.loggedIn === false) {
@@ -48,7 +62,6 @@ function UserDetails(props) {
   //   }
   return (
     <div>
-      {/* {token === "null" && <Redirect to="/login" />} */}
       {loggedIn ? (
         <div className="user-details">
           <Link className="add-user" to="/adduser">
@@ -56,41 +69,32 @@ function UserDetails(props) {
           </Link>
           <div className="table">
             <table>
-              <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Role</th>
-                <th>Country</th>
-                <th>Delete User</th>
-                {/* <th>Profile Pic</th>
-          <th>Name</th>
-          <th>Delete User</th> */}
-              </tr>
-              {props.users.map((user) => {
-                return (
-                  <tr key={user.id}>
-                    {/* <td>
-                      <img
-                        className="photo"
-                        src={user.imageLink}
-                        alt="Profilepic"
-                      />
-                    </td>
-                    <td>{user.name}</td> */}
-                    {console.log(user)}
-                    <td>{user.firstName}</td>
-                    <td>{user.lastName}</td>
-                    <td>{user.role}</td>
-                    <td>{user.country}</td>
-                    <td
-                      style={{ cursor: "pointer" }}
-                      onClick={() => props.handleDelete(user.id)}
-                    >
-                      Delete
-                    </td>
-                  </tr>
-                );
-              })}
+              <tbody>
+                <tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Role</th>
+                  <th>Country</th>
+                  <th>Delete User</th>
+                </tr>
+                {props.users.map((user) => {
+                  return (
+                    <tr key={user.id}>
+                      <td>{user.firstName}</td>
+                      <td>{user.lastName}</td>
+                      <td>{user.role}</td>
+                      <td>{user.country}</td>
+                      <td
+                        style={{ cursor: "pointer" }}
+                        // onClick={() => props.handleDelete(user.id)}
+                        onClick={() => deleteUser(user.id)}
+                      >
+                        Delete
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
             </table>
           </div>
         </div>

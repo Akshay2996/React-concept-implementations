@@ -46,3 +46,16 @@ h1 {
 .form button:hover {
   background: #056a4b;
 }
+
+.back-button {
+  color: #222;
+  text-decoration: none;
+  font-size: 1.2rem;
+  display: block;
+  width: 5%;
+  text-align: left;
+  outline: none;
+  /* background-color: #e52b50;
+  color: #fff;
+  border-radius: 3px; */
+}

@@ -30,14 +30,19 @@ function App() {
     },
   ];
   const [users, setUsers] = useState([]);
+  // const [isLoading, setIsLoading] = useState(true);
 
   const handleDelete = (id) => {
-    const newUser = users.filter((user) => user.id !== id);
+    const newUser = users.filter((user) => user.id.toString() !== id);
     setUsers(newUser);
   };
 
   const addUser = (useradded) => {
     setUsers([...users, useradded]);
+  };
+
+  const displayUserData = (data) => {
+    setUsers(data);
   };
 
   return (
@@ -70,7 +75,11 @@ function App() {
           render={() => (
             <div>
               <Navbar value={"loggedin"} />
-              <UserDetails users={users} handleDelete={handleDelete} />
+              <UserDetails
+                users={users}
+                handleDelete={handleDelete}
+                onUserData={displayUserData}
+              />
             </div>
           )}
         />

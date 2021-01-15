@@ -89,7 +89,6 @@ class Form extends Component {
 
   componentDidMount() {
     console.log("Component Mounted");
-    // localStorage.setItem("token", JSON.stringify(res.data.token));
   }
   componentWillUnmount() {
     console.log("Successfully UnMounted");

@@ -11,6 +11,10 @@
 .add-user button {
   cursor: pointer;
   margin: 2rem auto;
+  color: #fff;
+  background: #e52b50;
+  outline: none;
+  border-radius: 5px;
 }
 
 .table {
@@ -40,7 +44,7 @@
 .table th {
   padding-top: 12px;
   padding-bottom: 12px;
-  text-align: left;
+  text-align: center;
   background-color: #4caf50;
   color: #fff;
 }
