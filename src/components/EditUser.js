@@ -1,9 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "../styles/AddUser.css";
 import axios from "axios";
 
-export default function AddUser(props) {
+const EditUser = (props) => {
+  const { id } = useParams();
+  //   console.log(id);
   const handleSubmit = (e) => {
     e.preventDefault();
     const firstName = e.target.elements.firstName.value;
@@ -13,8 +14,8 @@ export default function AddUser(props) {
     const token = localStorage.getItem("token");
 
     const config = {
-      url: "http://localhost:5000/api/user/create",
-      method: "POST",
+      url: `http://localhost:5000/api/user/${id}`,
+      method: "PUT",
       headers: {
         authorization: token,
         "Content-Type": "application/json",
@@ -26,13 +27,9 @@ export default function AddUser(props) {
         country: country,
       },
     };
-
     axios(config)
-      .then((response) => {
-        console.log(response.data);
-        if (firstName && lastName && role && country) {
-          props.onAddUser(response.data);
-        }
+      .then(() => {
+        props.history.push("/user");
       })
       .catch((error) => {
         console.log(error);
@@ -43,16 +40,18 @@ export default function AddUser(props) {
       <Link to="/user" className="back-button">
         Back
       </Link>
-      <h1>Add User</h1>
+      <h1>Update User Details</h1>
       <div className="form">
         <form onSubmit={handleSubmit}>
           <input type="text" placeholder="First Name" name="firstName"></input>
           <input type="text" placeholder="Last Name" name="lastName"></input>
           <input type="text" placeholder="Role" name="role"></input>
           <input type="text" placeholder="Country" name="country"></input>
-          <button>Add</button>
+          <button>Update User</button>
         </form>
       </div>
     </div>
   );
-}
+};
+
+export default EditUser;

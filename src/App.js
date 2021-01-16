@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import UserDetails from "./components/UserDetails";
 import Navbar from "./components/Navbar";
 import AddUser from "./components/AddUser";
+import EditUser from "./components/EditUser";
 
 function App() {
   const userDetails = [
@@ -32,7 +33,7 @@ function App() {
   const [users, setUsers] = useState([]);
   // const [isLoading, setIsLoading] = useState(true);
 
-  const handleDelete = (id) => {
+  const handleUserDelete = (id) => {
     const newUser = users.filter((user) => user.id.toString() !== id);
     setUsers(newUser);
   };
@@ -77,7 +78,7 @@ function App() {
               <Navbar value={"loggedin"} />
               <UserDetails
                 users={users}
-                handleDelete={handleDelete}
+                handleUserDelete={handleUserDelete}
                 onUserData={displayUserData}
               />
             </div>
@@ -94,6 +95,15 @@ function App() {
                   history.push(`/user`);
                 }}
               />
+            </div>
+          )}
+        />
+        <Route
+          exact
+          path="/user/edit/:id"
+          render={({ history }) => (
+            <div>
+              <EditUser history={history} />
             </div>
           )}
         />

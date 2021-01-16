@@ -89,6 +89,7 @@ class Form extends Component {
 
   componentDidMount() {
     console.log("Component Mounted");
+    localStorage.removeItem("token");
   }
   componentWillUnmount() {
     console.log("Successfully UnMounted");

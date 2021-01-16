@@ -31,6 +31,15 @@
 .table th {
   border: 1px solid #ddd;
   padding: 8px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.edit-button {
+  border: 1px solid #ddd;
+  padding: 8px;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .table tr:nth-child(even) {

@@ -16,6 +16,7 @@ function UserDetails(props) {
   // }
 
   const [loggedIn, setLoggedIn] = useState(true);
+  // const [reload, setReload] = useState(null);
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -23,7 +24,6 @@ function UserDetails(props) {
     if (token === null) {
       setLoggedIn(false);
       console.log("Token is not provided");
-      // console.log(loggedIn);
     }
     const config = {
       url: "http://localhost:5000/api/user",
@@ -39,7 +39,7 @@ function UserDetails(props) {
         props.onUserData(response.data);
       })
       .catch((error) => console.log(error));
-  }, [token, loggedIn]);
+  }, []);
 
   const deleteUser = (id) => {
     const config = {
@@ -52,7 +52,7 @@ function UserDetails(props) {
     };
     axios(config).then((response) => {
       // console.log(response.data);
-      props.handleDelete(response.data.id);
+      props.handleUserDelete(response.data.id);
     });
   };
 
@@ -75,22 +75,28 @@ function UserDetails(props) {
                   <th>Last Name</th>
                   <th>Role</th>
                   <th>Country</th>
+                  <th>Edit User</th>
                   <th>Delete User</th>
                 </tr>
                 {props.users.map((user) => {
+                  console.log(user);
                   return (
                     <tr key={user.id}>
                       <td>{user.firstName}</td>
                       <td>{user.lastName}</td>
                       <td>{user.role}</td>
                       <td>{user.country}</td>
-                      <td
-                        style={{ cursor: "pointer" }}
-                        // onClick={() => props.handleDelete(user.id)}
-                        onClick={() => deleteUser(user.id)}
-                      >
-                        Delete
+                      <td>
+                        <Link
+                          to={{
+                            pathname: `/user/edit/${user.id}`,
+                          }}
+                          className="edit-button"
+                        >
+                          Edit
+                        </Link>
                       </td>
+                      <td onClick={() => deleteUser(user.id)}>Delete</td>
                     </tr>
                   );
                 })}
