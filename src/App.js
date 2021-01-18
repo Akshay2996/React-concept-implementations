@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
 import Form from "./components/Form";
 import "./App.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import UserDetails from "./components/UserDetails";
 import Navbar from "./components/Navbar";
 import AddUser from "./components/AddUser";
@@ -42,71 +42,80 @@ function App() {
     setUsers([...users, useradded]);
   };
 
+  // const displayUserData = useCallback(
+  //   (data) => {
+  //     return setUsers(data);
+  //   },
+  //   [data]
+  // );
   const displayUserData = (data) => {
+    console.log("working...");
     setUsers(data);
   };
 
   return (
     <Router>
       <div className="App">
-        <Route
-          exact
-          path="/"
-          render={() => (
-            <div>
-              <Navbar value={"login"} />
-              <Home />
-              <Footer />
-            </div>
-          )}
-        />
-        <Route
-          path="/login"
-          render={({ history }) => (
-            <div>
-              <Navbar value={"login"} />
-              <Form history={history} />
-              <Footer />
-            </div>
-          )}
-        />
-        <Route
-          exact
-          path="/user"
-          render={() => (
-            <div>
-              <Navbar value={"loggedin"} />
-              <UserDetails
-                users={users}
-                handleUserDelete={handleUserDelete}
-                onUserData={displayUserData}
-              />
-            </div>
-          )}
-        />
-        <Route
-          exact
-          path="/adduser"
-          render={({ history }) => (
-            <div>
-              <AddUser
-                onAddUser={(user) => {
-                  addUser(user);
-                  history.push(`/user`);
-                }}
-              />
-            </div>
-          )}
-        />
-        <Route
-          exact
-          path="/user/edit/:id"
-          render={({ history }) => (
-            <div>
-              <EditUser history={history} />
-            </div>
-          )}
-        />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <div>
+                <Navbar value={"login"} />
+                <Home />
+                <Footer />
+              </div>
+            )}
+          />
+          <Route
+            path="/login"
+            render={({ history }) => (
+              <div>
+                <Navbar value={"login"} />
+                <Form history={history} />
+                <Footer />
+              </div>
+            )}
+          />
+          <Route
+            exact
+            path="/user"
+            render={() => (
+              <div>
+                <Navbar value={"loggedin"} />
+                <UserDetails
+                  users={users}
+                  handleUserDelete={handleUserDelete}
+                  onUserData={displayUserData}
+                />
+              </div>
+            )}
+          />
+          <Route
+            exact
+            path="/adduser"
+            render={({ history }) => (
+              <div>
+                <AddUser
+                  onAddUser={(user) => {
+                    addUser(user);
+                    history.push(`/user`);
+                  }}
+                />
+              </div>
+            )}
+          />
+          <Route
+            exact
+            path="/user/edit/:id"
+            render={({ history }) => (
+              <div>
+                <EditUser history={history} />
+              </div>
+            )}
+          />
+        </Switch>
       </div>
     </Router>
   );

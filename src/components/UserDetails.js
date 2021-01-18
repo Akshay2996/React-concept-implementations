@@ -1,7 +1,11 @@
-import React, { useState, useEffect, Component } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Link, withRouter, Redirect } from "react-router-dom";
 import "../styles/UserDetails.css";
 import axios from "axios";
+
+function computeLongWord(users) {
+  console.log("useMemo works", users);
+}
 
 function UserDetails(props) {
   // constructor(props) {
@@ -18,30 +22,37 @@ function UserDetails(props) {
   const [loggedIn, setLoggedIn] = useState(true);
   // const [reload, setReload] = useState(null);
   const token = localStorage.getItem("token");
+  // const longWord = useMemo(() => {
+  //   computeLongWord(props.users);
+  // }, [props.users]);
 
   useEffect(() => {
     console.log("useEffect ran");
     if (token === null) {
       setLoggedIn(false);
       console.log("Token is not provided");
+    } else {
+      const config = {
+        url: "http://localhost:5000/api/user",
+        method: "POST",
+        headers: {
+          authorization: token,
+          "Content-Type": "application/json",
+        },
+      };
+      axios(config)
+        .then((response) => {
+          console.log(response.data);
+          props.onUserData(response.data);
+        })
+        .catch((error) => console.log(error));
     }
-    const config = {
-      url: "http://localhost:5000/api/user",
-      method: "POST",
-      headers: {
-        authorization: token,
-        "Content-Type": "application/json",
-      },
-    };
-    axios(config)
-      .then((response) => {
-        console.log(response.data);
-        props.onUserData(response.data);
-      })
-      .catch((error) => console.log(error));
-  }, []);
+  }, [token]);
+
+  // console.log("running everytime it's deleting the user");
 
   const deleteUser = (id) => {
+    console.log("delete function Working...");
     const config = {
       url: `http://localhost:5000/api/user/${id}`,
       method: "DELETE",
@@ -62,6 +73,7 @@ function UserDetails(props) {
   //   }
   return (
     <div>
+      {/* <div>{longWord}</div> */}
       {loggedIn ? (
         <div className="user-details">
           <Link className="add-user" to="/adduser">
@@ -79,7 +91,7 @@ function UserDetails(props) {
                   <th>Delete User</th>
                 </tr>
                 {props.users.map((user) => {
-                  console.log(user);
+                  {/* console.log(user); */}
                   return (
                     <tr key={user.id}>
                       <td>{user.firstName}</td>

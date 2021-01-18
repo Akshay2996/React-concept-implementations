@@ -101,10 +101,10 @@ class Form extends Component {
   // }
 
   render() {
-    const { email, password, formErrors, loggedIn } = this.state;
-    if (loggedIn) {
-      return <Redirect to="/user" />;
-    }
+    const { email, password, formErrors } = this.state;
+    // if (loggedIn) {
+    //   return <Redirect to="/user" />;
+    // }
     return (
       <div className="wrapper">
         <Link to="/" className="back">
