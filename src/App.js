@@ -49,7 +49,7 @@ function App() {
   //   [data]
   // );
   const displayUserData = (data) => {
-    console.log("working...");
+    // console.log("working...");
     setUsers(data);
   };
 
@@ -81,10 +81,11 @@ function App() {
           <Route
             exact
             path="/user"
-            render={() => (
+            render={({ history }) => (
               <div>
                 <Navbar value={"loggedin"} />
                 <UserDetails
+                  history={history}
                   users={users}
                   handleUserDelete={handleUserDelete}
                   onUserData={displayUserData}
@@ -109,9 +110,9 @@ function App() {
           <Route
             exact
             path="/user/edit/:id"
-            render={({ history }) => (
+            render={() => (
               <div>
-                <EditUser history={history} />
+                <EditUser />
               </div>
             )}
           />

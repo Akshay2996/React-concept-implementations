@@ -1,20 +1,21 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { useRef } from "react";
 import "../styles/AddUser.css";
 import axios from "axios";
 
 const EditUser = (props) => {
-  const { id } = useParams();
-  //   console.log(id);
+  const { id, firstName, lastName, role, country } = props.location.state;
+  // console.log(id, firstName, lastName, role, country);
 
   const fName = useRef();
   const lName = useRef();
   const Role = useRef();
   const Country = useRef();
-  // useRef -> {current}
+  // useRef -> {currrent}
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     // const firstName = e.target.elements.firstName.value;
     // const lastName = e.target.elements.lastName.value;
     // const role = e.target.elements.role.value;
@@ -49,6 +50,8 @@ const EditUser = (props) => {
         .catch((error) => {
           console.log(error);
         });
+    } else {
+      console.log("Fill all the fields");
     }
   };
   return (
@@ -59,10 +62,10 @@ const EditUser = (props) => {
       <h1>Update User Details</h1>
       <div className="form">
         <form onSubmit={handleSubmit}>
-          <input ref={fName} type="text" placeholder="First Name"></input>
-          <input ref={lName} type="text" placeholder="Last Name"></input>
-          <input ref={Role} type="text" placeholder="Role"></input>
-          <input ref={Country} type="text" placeholder="Country"></input>
+          <input ref={fName} type="text" defaultValue={firstName}></input>
+          <input ref={lName} type="text" defaultValue={lastName}></input>
+          <input ref={Role} type="text" defaultValue={role}></input>
+          <input ref={Country} type="text" defaultValue={country}></input>
           <button>Update User</button>
         </form>
       </div>
@@ -70,4 +73,4 @@ const EditUser = (props) => {
   );
 };
 
-export default EditUser;
+export default withRouter(EditUser);

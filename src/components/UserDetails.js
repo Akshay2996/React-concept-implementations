@@ -2,10 +2,11 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Link, withRouter, Redirect } from "react-router-dom";
 import "../styles/UserDetails.css";
 import axios from "axios";
+import EditUser from "./EditUser";
 
-function computeLongWord(users) {
-  console.log("useMemo works", users);
-}
+// function computeLongWord(users) {
+//   console.log("useMemo works", users);
+// }
 
 function UserDetails(props) {
   // constructor(props) {
@@ -67,6 +68,14 @@ function UserDetails(props) {
     });
   };
 
+  const editUser = (user) => {
+    // console.log(user);
+    props.history.push({
+      pathname: `/user/edit/${user.id}`,
+      state: user,
+    });
+  };
+
   // render() {
   //   if (this.state.loggedIn === false) {
   //     return <Redirect to="/login" />;
@@ -91,23 +100,24 @@ function UserDetails(props) {
                   <th>Delete User</th>
                 </tr>
                 {props.users.map((user) => {
-                  {/* console.log(user); */}
                   return (
                     <tr key={user.id}>
                       <td>{user.firstName}</td>
                       <td>{user.lastName}</td>
                       <td>{user.role}</td>
                       <td>{user.country}</td>
-                      <td>
+                      {/* <td>
                         <Link
                           to={{
                             pathname: `/user/edit/${user.id}`,
+                            state: user,
                           }}
                           className="edit-button"
                         >
                           Edit
                         </Link>
-                      </td>
+                      </td> */}
+                      <td onClick={() => editUser(user)}>Edit</td>
                       <td onClick={() => deleteUser(user.id)}>Delete</td>
                     </tr>
                   );
