@@ -11,7 +11,7 @@ const EditUser = (props) => {
   const lName = useRef();
   const Role = useRef();
   const Country = useRef();
-  // useRef -> {currrent}
+  // useRef -> {current}
 
   const handleSubmit = (e) => {
     e.preventDefault();
