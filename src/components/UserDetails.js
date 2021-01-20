@@ -27,30 +27,28 @@ function UserDetails(props) {
   //   computeLongWord(props.users);
   // }, [props.users]);
 
-  useEffect(() => {
-    console.log("useEffect ran");
-    if (token === null) {
-      setLoggedIn(false);
-      console.log("Token is not provided");
-    } else {
-      const config = {
-        url: "http://localhost:5000/api/user",
-        method: "POST",
-        headers: {
-          authorization: token,
-          "Content-Type": "application/json",
-        },
-      };
-      axios(config)
-        .then((response) => {
-          console.log(response.data);
-          props.onUserData(response.data);
-        })
-        .catch((error) => console.log(error));
-    }
-  }, [token]);
-
-  // console.log("running everytime it's deleting the user");
+  // useEffect(() => {
+  //   console.log("useEffect ran");
+  //   if (token === null) {
+  //     setLoggedIn(false);
+  //     console.log("Token is not provided");
+  //   } else {
+  //     const config = {
+  //       url: "http://localhost:5000/api/user",
+  //       method: "POST",
+  //       headers: {
+  //         authorization: token,
+  //         "Content-Type": "application/json",
+  //       },
+  //     };
+  //     axios(config)
+  //       .then((response) => {
+  //         console.log(response.data);
+  //         props.onUserData(response.data);
+  //       })
+  //       .catch((error) => console.log(error));
+  //   }
+  // }, [token]);
 
   const deleteUser = (id) => {
     console.log("delete function Working...");
@@ -118,7 +116,8 @@ function UserDetails(props) {
                         </Link>
                       </td> */}
                       <td onClick={() => editUser(user)}>Edit</td>
-                      <td onClick={() => deleteUser(user.id)}>Delete</td>
+                      {/* <td onClick={() => deleteUser(user.id)}>Delete</td> */}
+                      <td onClick={() => props.removeUser(user.id)}>Delete</td>
                     </tr>
                   );
                 })}

@@ -8,18 +8,20 @@ import Navbar from "./Navbar";
 import AddUser from "./AddUser";
 import EditUser from "./EditUser";
 
-function App() {
-  const [users, setUsers] = useState([]);
-  // const [isLoading, setIsLoading] = useState(true);
+function App(props) {
+  console.log(props);
+  //   const [users, setUsers] = useState([]);
 
-  const handleUserDelete = (id) => {
-    const newUser = users.filter((user) => user.id.toString() !== id);
-    setUsers(newUser);
-  };
+  //   const { users } = props;
 
-  const addUser = (useradded) => {
-    setUsers([...users, useradded]);
-  };
+  //   const handleUserDelete = (id) => {
+  //     const newUser = users.filter((user) => user.id.toString() !== id);
+  //     setUsers(newUser);
+  //   };
+
+  //   const addUser = (useradded) => {
+  //     setUsers([...users, useradded]);
+  //   };
 
   // const displayUserData = useCallback(
   //   (data) => {
@@ -27,10 +29,9 @@ function App() {
   //   },
   //   [data]
   // );
-  const displayUserData = (data) => {
-    // console.log("working...");
-    setUsers(data);
-  };
+  //   const displayUserData = (data) => {
+  //     setUsers(data);
+  //   };
 
   return (
     <div className="App">
@@ -56,7 +57,7 @@ function App() {
             </div>
           )}
         />
-        <Route
+        {/* <Route
           exact
           path="/user"
           render={({ history }) => (
@@ -70,8 +71,18 @@ function App() {
               />
             </div>
           )}
-        />
+        /> */}
         <Route
+          exact
+          path="/user"
+          render={({ history }) => (
+            <div>
+              <Navbar value={"loggedin"} />
+              <UserDetails history={history} {...props} />
+            </div>
+          )}
+        />
+        {/* <Route
           exact
           path="/adduser"
           render={({ history }) => (
@@ -84,13 +95,22 @@ function App() {
               />
             </div>
           )}
+        /> */}
+        <Route
+          exact
+          path="/adduser"
+          render={({ history }) => (
+            <div>
+              <AddUser {...props} history={history} />
+            </div>
+          )}
         />
         <Route
           exact
           path="/user/edit/:id"
           render={() => (
             <div>
-              <EditUser />
+              <EditUser {...props} />
             </div>
           )}
         />

@@ -2,33 +2,46 @@ const initState = {
   users: [
     {
       id: 0,
-      name: "Akshay Sharma",
-      imageLink:
-        "https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/html/html.png",
+      firstName: "Akshay",
+      lastName: "Sharma",
+      role: "Developer",
+      country: "India",
     },
     {
       id: 1,
-      name: "Anish Kaushal",
-      imageLink:
-        "https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/css/css.png",
+      firstName: "Anish",
+      lastName: "Kaushal",
+      role: "Developer",
+      country: "India",
     },
     {
       id: 2,
-      name: "Seema Devi",
-      imageLink:
-        "https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/javascript/javascript.png",
+      firstName: "Seema",
+      lastName: "Devi",
+      role: "Developer",
+      country: "India",
     },
   ],
 };
 
-const rootReducer = (state = initState, action) => {
+const rootReducer = function users(state = initState, action) {
   switch (action.type) {
+    case 'REQUEST_API_TOKEN':
+      return 
     case "REMOVE_USER":
-      return state;
+      return { users: state.users.filter((user) => user.id !== action.id) };
     case "ADD_USER":
-      return state;
+      return { users: [...state.users, action.newuser] };
     case "UPDATE_USER":
-      return state;
+      const oldUsers = state.users.filter(
+        (user) => user.id !== action.updateuser.id
+      );
+      const newUsers = [...oldUsers, action.updateuser];
+      // Sorting function -> Updated user comes first
+      newUsers.sort(function (a, b) {
+        return b.id - a.id;
+      });
+      return { users: newUsers };
     default:
       return state;
   }

@@ -29,27 +29,36 @@ const EditUser = (props) => {
     const country = Country.current.value;
 
     if (firstName && lastName && role && country) {
-      const config = {
-        url: `http://localhost:5000/api/user/${id}`,
-        method: "PUT",
-        headers: {
-          authorization: token,
-          "Content-Type": "application/json",
-        },
-        data: {
-          firstName: firstName,
-          lastName: lastName,
-          role: role,
-          country: country,
-        },
+      // const config = {
+      //   url: `http://localhost:5000/api/user/${id}`,
+      //   method: "PUT",
+      //   headers: {
+      //     authorization: token,
+      //     "Content-Type": "application/json",
+      //   },
+      //   data: {
+      //     firstName: firstName,
+      //     lastName: lastName,
+      //     role: role,
+      //     country: country,
+      //   },
+      // };
+      // axios(config)
+      //   .then(() => {
+      //     props.history.push("/user");
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
+      const user = {
+        id: id,
+        firstName: firstName,
+        lastName: lastName,
+        role: role,
+        country: country,
       };
-      axios(config)
-        .then(() => {
-          props.history.push("/user");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      props.updateUser(user);
+      props.history.push("/user");
     } else {
       console.log("Fill all the fields");
     }

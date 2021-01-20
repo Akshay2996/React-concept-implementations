@@ -2,17 +2,17 @@ import "./App.css";
 import Main from "./components/Main";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { removeUser } from "./redux/actions";
+import * as actions from "./redux/actions";
 import { withRouter } from "react-router-dom";
 
 function mapStateToProps(state) {
   return {
-    users: state,
+    users: state.users,
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ removeUser }, dispatch);
+  return bindActionCreators(actions, dispatch);
 }
 
 const App = withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
