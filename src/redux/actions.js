@@ -1,5 +1,5 @@
 // Requesting Token
-export function requestApiToken(token) {
+export function requestApiToken() {
   return {
     type: "REQUEST_API_TOKEN",
   };
@@ -9,7 +9,7 @@ export function requestApiToken(token) {
 
 export function removeUser(id) {
   return {
-    type: "REMOVE_USER",
+    type: "REQUEST_REMOVE_USER",
     id: id,
   };
 }
@@ -18,7 +18,7 @@ export function removeUser(id) {
 
 export function addUser(newuser) {
   return {
-    type: "ADD_USER",
+    type: "REQUEST_ADD_USER",
     newuser: newuser,
   };
 }
@@ -27,7 +27,14 @@ export function addUser(newuser) {
 
 export function updateUser(updateuser) {
   return {
-    type: "UPDATE_USER",
+    type: "REQUEST_UPDATE_USER",
     updateuser: updateuser,
+  };
+}
+
+// Display User data
+export function displayUserData() {
+  return {
+    type: "REQUEST_USER",
   };
 }

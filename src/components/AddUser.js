@@ -16,8 +16,6 @@ export default function AddUser(props) {
     // const role = e.target.elements.role.value;
     // const country = e.target.elements.country.value;
 
-    const token = localStorage.getItem("token");
-
     const firstName = fName.current.value;
     const lastName = lName.current.value;
     const role = Role.current.value;
@@ -49,7 +47,6 @@ export default function AddUser(props) {
     // }
 
     const user = {
-      id: Number(new Date()),
       firstName: firstName,
       lastName: lastName,
       role: role,

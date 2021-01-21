@@ -22,48 +22,49 @@ function UserDetails(props) {
 
   const [loggedIn, setLoggedIn] = useState(true);
   // const [reload, setReload] = useState(null);
-  const token = localStorage.getItem("token");
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   console.log("User Details Token" + token);
+  //   // if (token === null) {
+  //   //   setLoggedIn(false);
+  //   //   console.log("Token is not provided");
+  //   // }
+  // }, []);
+
+  // function showUser() {
+  //   props.onShowUser();
+  // }
+
   // const longWord = useMemo(() => {
   //   computeLongWord(props.users);
   // }, [props.users]);
 
-  // useEffect(() => {
-  //   console.log("useEffect ran");
-  //   if (token === null) {
-  //     setLoggedIn(false);
-  //     console.log("Token is not provided");
-  //   } else {
-  //     const config = {
-  //       url: "http://localhost:5000/api/user",
-  //       method: "POST",
-  //       headers: {
-  //         authorization: token,
-  //         "Content-Type": "application/json",
-  //       },
-  //     };
-  //     axios(config)
-  //       .then((response) => {
-  //         console.log(response.data);
-  //         props.onUserData(response.data);
-  //       })
-  //       .catch((error) => console.log(error));
-  //   }
-  // }, [token]);
+  const showUser = () => {
+    const token = localStorage.getItem("token");
+    if (token === null) {
+      setLoggedIn(false);
+      console.log("Token is not provided");
+    } else {
+      props.displayUserData();
+      props.history.push("/user");
+    }
+  };
 
   const deleteUser = (id) => {
     console.log("delete function Working...");
-    const config = {
-      url: `http://localhost:5000/api/user/${id}`,
-      method: "DELETE",
-      headers: {
-        authorization: token,
-        "Content-Type": "application/json",
-      },
-    };
-    axios(config).then((response) => {
-      // console.log(response.data);
-      props.handleUserDelete(response.data.id);
-    });
+    // const config = {
+    //   url: `http://localhost:5000/api/user/${id}`,
+    //   method: "DELETE",
+    //   headers: {
+    //     authorization: token,
+    //     "Content-Type": "application/json",
+    //   },
+    // };
+    // axios(config).then((response) => {
+    //   // console.log(response.data);
+    //   props.handleUserDelete(response.data.id);
+    // });
+    props.removeUser(id);
   };
 
   const editUser = (user) => {
@@ -81,6 +82,13 @@ function UserDetails(props) {
   return (
     <div>
       {/* <div>{longWord}</div> */}
+      <button
+        onClick={() => {
+          showUser();
+        }}
+      >
+        Show Users
+      </button>
       {loggedIn ? (
         <div className="user-details">
           <Link className="add-user" to="/adduser">
@@ -116,8 +124,8 @@ function UserDetails(props) {
                         </Link>
                       </td> */}
                       <td onClick={() => editUser(user)}>Edit</td>
-                      {/* <td onClick={() => deleteUser(user.id)}>Delete</td> */}
-                      <td onClick={() => props.removeUser(user.id)}>Delete</td>
+                      <td onClick={() => deleteUser(user.id)}>Delete</td>
+                      {/* <td onClick={() => props.removeUser(user.id)}>Delete</td> */}
                     </tr>
                   );
                 })}

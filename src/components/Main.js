@@ -52,7 +52,7 @@ function App(props) {
           render={({ history }) => (
             <div>
               <Navbar value={"login"} />
-              <Form history={history} />
+              <Form {...props} history={history} />
               <Footer />
             </div>
           )}
@@ -78,7 +78,7 @@ function App(props) {
           render={({ history }) => (
             <div>
               <Navbar value={"loggedin"} />
-              <UserDetails history={history} {...props} />
+              <UserDetails {...props} history={history} />
             </div>
           )}
         />

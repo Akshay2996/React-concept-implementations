@@ -67,18 +67,20 @@ class Form extends Component {
 
     if (formValid(this.state)) {
       if (password.length >= 6 && email !== null) {
-        const config = {
-          url: "http://localhost:5000/api/user/login",
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-        axios(config).then((res) => {
-          // console.log(res.data);
-          localStorage.setItem("token", res.data.token);
-          this.props.history.push("/user");
-        });
+        // const config = {
+        //   url: "http://localhost:5000/api/user/login",
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        // };
+        // axios(config).then((res) => {
+        //   // console.log(res.data);
+        //   localStorage.setItem("token", res.data.token);
+        //   this.props.history.push("/user");
+        // });
+        this.props.requestApiToken();
+        this.props.history.push("/user");
       } else {
         console.log("Error submitting form");
       }
