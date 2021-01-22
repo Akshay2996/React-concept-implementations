@@ -33,8 +33,10 @@ export function updateUser(updateuser) {
 }
 
 // Display User data
-export function displayUserData() {
+export function displayUserData(offset, limit) {
   return {
     type: "REQUEST_USER",
+    offset: offset,
+    limit: limit,
   };
 }

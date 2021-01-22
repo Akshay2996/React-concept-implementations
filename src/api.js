@@ -16,10 +16,11 @@ export const fetchToken = () => {
   });
 };
 
-// displayUserApi function
-export const displayUserApi = (users) => {
+// displayUser function
+export const displayUserApi = (offset, limit) => {
   const token = localStorage.getItem("token");
-  console.log("Token for user is printed here: " + token);
+  //   console.log("Token for user is printed here: " + token);
+  console.log("Api Offset & limit: " + offset, limit);
   const config = {
     url: "http://localhost:5000/api/user",
     method: "POST",
@@ -27,14 +28,22 @@ export const displayUserApi = (users) => {
       authorization: token,
       "Content-Type": "application/json",
     },
+    data: {
+      offset: offset,
+      limit: limit,
+    },
   };
   return axios(config)
     .then((response) => {
-      console.log(response.data);
+      console.table("Data from backend" + JSON.stringify(response.data));
       return response.data;
     })
     .catch((error) => console.log(error));
 };
+
+// headers:{
+//
+// }
 
 // addUser function
 export const addUserApi = (newuser) => {
@@ -58,7 +67,8 @@ export const addUserApi = (newuser) => {
   return axios(config)
     .then((response) => {
       // console.log(response.data);
-      return response.data;
+      console.log(response.data.userList);
+      return response.data.userList;
     })
     .catch((error) => {
       console.log(error);
@@ -78,7 +88,8 @@ export const removeUserApi = (id) => {
   };
   return axios(config).then((response) => {
     // console.log(response.data);
-    return response.data.id;
+    console.log(response.data.userList);
+    return response.data.userList.id;
   });
 };
 
@@ -103,7 +114,8 @@ export const updateUserApi = (updateuser) => {
   return axios(config)
     .then((response) => {
       //   props.history.push("/user");
-      return response.data;
+      console.log(response.data.userList);
+      return response.data.userList;
     })
     .catch((error) => {
       console.log(error);

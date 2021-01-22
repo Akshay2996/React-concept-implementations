@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Link, withRouter, Redirect } from "react-router-dom";
 import "../styles/UserDetails.css";
-import axios from "axios";
-import EditUser from "./EditUser";
 
 // function computeLongWord(users) {
 //   console.log("useMemo works", users);
 // }
-
+const limit = 3;
 function UserDetails(props) {
   // constructor(props) {
   //   super(props);
@@ -21,7 +19,32 @@ function UserDetails(props) {
   // }
 
   const [loggedIn, setLoggedIn] = useState(true);
-  // const [reload, setReload] = useState(null);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [num, setNum] = useState(1);
+  const [offset, setOffset] = useState(0);
+
+  // const indexOfLastUser = currentPage * limit;
+  // const indexOfFirstUser = indexOfLastUser - limit;
+  // const currentUsers = props.users.slice(indexOfFirstUser, indexOfLastUser);
+
+  // Pagination concept here
+  const pageNumber = [];
+  let totalUser = props.count;
+  console.log(totalUser);
+  for (let i = 1; i <= Math.ceil(totalUser / limit); i++) {
+    pageNumber.push(i);
+  }
+
+  const handlePagination = (num) => {
+    // console.log("Your Number is " + number);
+    console.log("Num state" + num);
+    let changePage = (num - 1) * limit;
+    console.log("change page is here" + changePage);
+    setOffset(changePage);
+    // setCurrentPage(number);
+    showUser(offset, limit);
+  };
+  // const [reload, setReload] = useState(true);
   // useEffect(() => {
   //   const token = localStorage.getItem("token");
   //   console.log("User Details Token" + token);
@@ -39,14 +62,16 @@ function UserDetails(props) {
   //   computeLongWord(props.users);
   // }, [props.users]);
 
-  const showUser = () => {
+  const showUser = (offset, limit) => {
     const token = localStorage.getItem("token");
-    if (token === null) {
+    if (token !== null) {
+      setLoggedIn(true);
+      console.log(offset, limit);
+      props.displayUserData(offset, limit);
+      props.history.push("/user");
+    } else {
       setLoggedIn(false);
       console.log("Token is not provided");
-    } else {
-      props.displayUserData();
-      props.history.push("/user");
     }
   };
 
@@ -65,6 +90,7 @@ function UserDetails(props) {
     //   props.handleUserDelete(response.data.id);
     // });
     props.removeUser(id);
+    showUser(offset, limit);
   };
 
   const editUser = (user) => {
@@ -84,11 +110,12 @@ function UserDetails(props) {
       {/* <div>{longWord}</div> */}
       <button
         onClick={() => {
-          showUser();
+          showUser(offset, limit);
         }}
       >
         Show Users
       </button>
+
       {loggedIn ? (
         <div className="user-details">
           <Link className="add-user" to="/adduser">
@@ -112,17 +139,6 @@ function UserDetails(props) {
                       <td>{user.lastName}</td>
                       <td>{user.role}</td>
                       <td>{user.country}</td>
-                      {/* <td>
-                        <Link
-                          to={{
-                            pathname: `/user/edit/${user.id}`,
-                            state: user,
-                          }}
-                          className="edit-button"
-                        >
-                          Edit
-                        </Link>
-                      </td> */}
                       <td onClick={() => editUser(user)}>Edit</td>
                       <td onClick={() => deleteUser(user.id)}>Delete</td>
                       {/* <td onClick={() => props.removeUser(user.id)}>Delete</td> */}
@@ -131,6 +147,24 @@ function UserDetails(props) {
                 })}
               </tbody>
             </table>
+          </div>
+          {/* Pagination Page here */}
+          <div className="pagination-div">
+            <ul className="pagination">
+              {pageNumber.map((number) => (
+                <li key={number} className="page-item">
+                  <button
+                    onClick={() => {
+                      // setNum(number);
+                      handlePagination(number);
+                    }}
+                    className="page-link"
+                  >
+                    {number}
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       ) : (

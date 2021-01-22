@@ -8,6 +8,7 @@ import { withRouter } from "react-router-dom";
 function mapStateToProps(state) {
   return {
     users: state.users,
+    count: state.count,
   };
 }
 

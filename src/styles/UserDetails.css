@@ -67,3 +67,12 @@ button {
   border: 1px solid #ddd;
   padding: 8px;
 }
+
+.pagination {
+  display: flex;
+  list-style-type: none;
+}
+.pagination button {
+  outline: none;
+  cursor: pointer;
+}
