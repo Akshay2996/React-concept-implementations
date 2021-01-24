@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import Footer from "./Footer";
 import Home from "./Home";
 import Form from "./Form";
 import { Route, Switch } from "react-router-dom";
-import UserDetails from "./UserDetails";
 import Navbar from "./Navbar";
 import AddUser from "./AddUser";
 import EditUser from "./EditUser";
+// import UserDetails from "./UserDetails";
+const UserDetails = lazy(() => import("./UserDetails"));
 
 function App(props) {
   console.log(props);
@@ -78,7 +79,9 @@ function App(props) {
           render={({ history }) => (
             <div>
               <Navbar value={"loggedin"} />
-              <UserDetails {...props} history={history} />
+              <Suspense fallback={<h1>Loading Users ...</h1>}>
+                <UserDetails {...props} history={history} />
+              </Suspense>
             </div>
           )}
         />
