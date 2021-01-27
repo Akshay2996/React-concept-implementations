@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../styles/Form.css";
-import axios from "axios";
 
 const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -67,18 +66,6 @@ class Form extends Component {
 
     if (formValid(this.state)) {
       if (password.length >= 6 && email !== null) {
-        // const config = {
-        //   url: "http://localhost:5000/api/user/login",
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        // };
-        // axios(config).then((res) => {
-        //   // console.log(res.data);
-        //   localStorage.setItem("token", res.data.token);
-        //   this.props.history.push("/user");
-        // });
         this.props.requestApiToken();
         this.props.history.push("/user");
       } else {
@@ -97,16 +84,8 @@ class Form extends Component {
     console.log("Successfully UnMounted");
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   console.log("component updated");
-  //   console.log(prevProps, prevState);
-  // }
-
   render() {
     const { email, password, formErrors } = this.state;
-    // if (loggedIn) {
-    //   return <Redirect to="/user" />;
-    // }
     return (
       <div className="wrapper">
         <Link to="/" className="back">

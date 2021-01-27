@@ -1,7 +1,6 @@
 import { Link, withRouter } from "react-router-dom";
 import { useRef } from "react";
 import "../styles/AddUser.css";
-import axios from "axios";
 
 const EditUser = (props) => {
   const { id, firstName, lastName, role, country } = props.location.state;
@@ -21,7 +20,7 @@ const EditUser = (props) => {
     // const role = e.target.elements.role.value;
     // const country = e.target.elements.country.value;
 
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
 
     const firstName = fName.current.value;
     const lastName = lName.current.value;
@@ -29,27 +28,6 @@ const EditUser = (props) => {
     const country = Country.current.value;
 
     if (firstName && lastName && role && country) {
-      // const config = {
-      //   url: `http://localhost:5000/api/user/${id}`,
-      //   method: "PUT",
-      //   headers: {
-      //     authorization: token,
-      //     "Content-Type": "application/json",
-      //   },
-      //   data: {
-      //     firstName: firstName,
-      //     lastName: lastName,
-      //     role: role,
-      //     country: country,
-      //   },
-      // };
-      // axios(config)
-      //   .then(() => {
-      //     props.history.push("/user");
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
       const user = {
         id: id,
         firstName: firstName,

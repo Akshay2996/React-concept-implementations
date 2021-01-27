@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense } from "react";
+import React, { lazy, Suspense } from "react";
 import Footer from "./Footer";
 import Home from "./Home";
 import Form from "./Form";
@@ -7,33 +7,10 @@ import Navbar from "./Navbar";
 import AddUser from "./AddUser";
 import EditUser from "./EditUser";
 import ErrorBoundary from "./ErrorBoundary";
-// import UserDetails from "./UserDetails";
 const UserDetails = lazy(() => import("./UserDetails"));
 
 function App(props) {
   console.log(props);
-  //   const [users, setUsers] = useState([]);
-
-  //   const { users } = props;
-
-  //   const handleUserDelete = (id) => {
-  //     const newUser = users.filter((user) => user.id.toString() !== id);
-  //     setUsers(newUser);
-  //   };
-
-  //   const addUser = (useradded) => {
-  //     setUsers([...users, useradded]);
-  //   };
-
-  // const displayUserData = useCallback(
-  //   (data) => {
-  //     return setUsers(data);
-  //   },
-  //   [data]
-  // );
-  //   const displayUserData = (data) => {
-  //     setUsers(data);
-  //   };
 
   return (
     <div className="App">
@@ -59,21 +36,6 @@ function App(props) {
             </div>
           )}
         />
-        {/* <Route
-          exact
-          path="/user"
-          render={({ history }) => (
-            <div>
-              <Navbar value={"loggedin"} />
-              <UserDetails
-                history={history}
-                users={users}
-                handleUserDelete={handleUserDelete}
-                onUserData={displayUserData}
-              />
-            </div>
-          )}
-        /> */}
         <Route
           exact
           path="/user"

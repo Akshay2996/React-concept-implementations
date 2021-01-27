@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import "../styles/AddUser.css";
-import axios from "axios";
 
 export default function AddUser(props) {
   const fName = useRef();
@@ -20,31 +19,6 @@ export default function AddUser(props) {
     const lastName = lName.current.value;
     const role = Role.current.value;
     const country = Country.current.value;
-    // if (firstName && lastName && role && country) {
-    //   const config = {
-    //     url: "http://localhost:5000/api/user/create",
-    //     method: "POST",
-    //     headers: {
-    //       authorization: token,
-    //       "Content-Type": "application/json",
-    //     },
-    //     data: {
-    //       firstName: firstName,
-    //       lastName: lastName,
-    //       role: role,
-    //       country: country,
-    //     },
-    //   };
-
-    //   axios(config)
-    //     .then((response) => {
-    //       // console.log(response.data);
-    //       props.onAddUser(response.data);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // }
 
     const user = {
       firstName: firstName,

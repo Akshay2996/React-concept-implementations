@@ -2,7 +2,6 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import {
   REQUEST_API_TOKEN,
-  receiveApiToken,
   REQUEST_USER,
   receiveUser,
   REQUEST_ADD_USER,
@@ -25,9 +24,6 @@ function* getApiToken() {
   console.log("saga is working & calling the API");
   try {
     yield call(fetchToken);
-    // console.log("Token is: " + token);
-    // localStorage.setItem("token", token);
-    // yield put(receiveApiToken(token));
   } catch (error) {
     console.error(error);
   }
@@ -61,7 +57,7 @@ function* getAddUser(action) {
 function* getRemoveUser(action) {
   console.log("Removing the user using saga");
   try {
-    const removeUser = yield call(removeUserApi, action.id);
+    yield call(removeUserApi, action.id);
     // console.log("Id of user to remove" + JSON.stringify(removeUser.userList));
     yield put(receiveRemoveUser(action.id));
   } catch (error) {

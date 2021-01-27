@@ -1,27 +1,12 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link, withRouter, Redirect } from "react-router-dom";
 import "../styles/UserDetails.css";
 
 const token = localStorage.getItem("token");
 function UserDetails(props) {
-  // console.log("User Details Function is running");
-  // constructor(props) {
-  //   super(props);
-  //   const token = localStorage.getItem("token");
-  //   let loggedIn = true;
-  //   if (token === null) {
-  //     loggedIn = false;
-  //     console.log("Token is not provided");
-  //   }
-  //   this.state = { loggedIn: loggedIn };
-  // }
-
   const [loggedIn, setLoggedIn] = useState(true);
-  // const [reload, setReload] = useState(false);
-  
   const [num, setNum] = useState(1);
   const [offset, setOffset] = useState(0);
-  // const [count, setCount] = useState(0);
   const limit = 3;
 
   // Pagination concept here
@@ -45,7 +30,6 @@ function UserDetails(props) {
 
   // Display User
   const showUser = (offset, limit) => {
-    setLoggedIn(true);
     console.log("Running because of useMemo", offset, limit);
     props.displayUserData(offset, limit);
     props.history.push("/user");
@@ -55,11 +39,9 @@ function UserDetails(props) {
   function handlePagination() {
     // console.log("Your Number is " + number);
     console.log("working in useMemo");
-    console.log("Num state" + num);
     let changePage = (num - 1) * limit;
     // console.log("change page is here" + changePage);
     setOffset(changePage);
-    // setCurrentPage(number);
     showUser(offset, limit);
   }
 
@@ -68,18 +50,7 @@ function UserDetails(props) {
   }, [num, offset]);
 
   const deleteUser = (id) => {
-    console.log("delete function Working...");
-    // const config = {
-    //   url: `http://localhost:5000/api/user/${id}`,
-    //   method: "DELETE",
-    //   headers: {
-    //     authorization: token,
-    //     "Content-Type": "application/json",
-    //   },
-    // };
-    // axios(config).then((response) => {
-    //   props.handleUserDelete(response.data.id);
-    // });
+    // console.log("delete function Working...");
     props.removeUser(id);
     showUser(offset, limit);
   };
@@ -92,14 +63,8 @@ function UserDetails(props) {
     });
   };
 
-  // render() {
-  //   if (this.state.loggedIn === false) {
-  //     return <Redirect to="/login" />;
-  //   }
   return (
     <div>
-      {/* <button onClick={() => setCount(count + 1)}>Counter</button>
-      <div>Button Clicked {count} number of times</div> */}
       {loggedIn ? (
         <div className="user-details">
           <Link className="add-user" to="/adduser">
@@ -125,7 +90,6 @@ function UserDetails(props) {
                       <td>{user.country}</td>
                       <td onClick={() => editUser(user)}>Edit</td>
                       <td onClick={() => deleteUser(user.id)}>Delete</td>
-                      {/* <td onClick={() => props.removeUser(user.id)}>Delete</td> */}
                     </tr>
                   );
                 })}
@@ -157,7 +121,6 @@ function UserDetails(props) {
       )}
     </div>
   );
-  // }
 }
 
 export default withRouter(UserDetails);

@@ -10,14 +10,6 @@ export const RECEIVE_REMOVE_USER = "RECEIVE_REMOVE_USER";
 export const REQUEST_UPDATE_USER = "REQUEST_UPDATE_USER";
 export const RECEIVE_UPDATE_USER = "RECEIVE_UPDATE_USER";
 
-// Receive token here
-export const receiveApiToken = (token) => {
-  return {
-    type: RECEIVE_API_TOKEN,
-    token: token,
-  };
-};
-
 // Receive User here
 export const receiveUser = (users, limit, offset) => {
   // console.log("It working here...");
