@@ -38,7 +38,7 @@ function* getUsers(action) {
   console.log("Displaying user using saga");
   try {
     const users = yield call(displayUserApi, action.offset, action.limit);
-    console.log("users are shown here" + JSON.stringify(users));
+    // console.log("users are shown here" + JSON.stringify(users));
     yield put(receiveUser(users, action.offset, action.limit));
   } catch (error) {
     console.log(error);
@@ -50,7 +50,7 @@ function* getAddUser(action) {
   console.log("Adding user using Saga");
   try {
     const newUser = yield call(addUserApi, action.newuser);
-    // console.log("NewUser:" + newUser);
+    console.log("NewUser: " + JSON.stringify(newUser));
     yield put(receiveAddUser(newUser));
   } catch (error) {
     console.log(error);
@@ -62,7 +62,7 @@ function* getRemoveUser(action) {
   console.log("Removing the user using saga");
   try {
     const removeUser = yield call(removeUserApi, action.id);
-    // console.log("Id of user to remove" + removeUser);
+    // console.log("Id of user to remove" + JSON.stringify(removeUser.userList));
     yield put(receiveRemoveUser(action.id));
   } catch (error) {
     console.log(error);
@@ -82,7 +82,7 @@ function* getUpdateUser(action) {
 }
 
 export default function* mySaga() {
-  console.log("saga working...");
+  // console.log("saga working...");
   yield all([
     takeLatest(REQUEST_API_TOKEN, getApiToken),
     takeLatest(REQUEST_USER, getUsers),

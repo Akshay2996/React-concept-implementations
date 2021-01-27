@@ -6,6 +6,7 @@ import { Route, Switch } from "react-router-dom";
 import Navbar from "./Navbar";
 import AddUser from "./AddUser";
 import EditUser from "./EditUser";
+import ErrorBoundary from "./ErrorBoundary";
 // import UserDetails from "./UserDetails";
 const UserDetails = lazy(() => import("./UserDetails"));
 
@@ -78,33 +79,23 @@ function App(props) {
           path="/user"
           render={({ history }) => (
             <div>
-              <Navbar value={"loggedin"} />
-              <Suspense fallback={<h1>Loading Users ...</h1>}>
-                <UserDetails {...props} history={history} />
-              </Suspense>
+              <ErrorBoundary>
+                <Navbar value={"loggedin"} />
+                <Suspense fallback={<h1>Loading Users ...</h1>}>
+                  <UserDetails {...props} history={history} />
+                </Suspense>
+              </ErrorBoundary>
             </div>
           )}
         />
-        {/* <Route
-          exact
-          path="/adduser"
-          render={({ history }) => (
-            <div>
-              <AddUser
-                onAddUser={(user) => {
-                  addUser(user);
-                  history.push(`/user`);
-                }}
-              />
-            </div>
-          )}
-        /> */}
         <Route
           exact
           path="/adduser"
           render={({ history }) => (
             <div>
-              <AddUser {...props} history={history} />
+              <ErrorBoundary>
+                <AddUser {...props} history={history} />
+              </ErrorBoundary>
             </div>
           )}
         />
@@ -113,7 +104,9 @@ function App(props) {
           path="/user/edit/:id"
           render={() => (
             <div>
-              <EditUser {...props} />
+              <ErrorBoundary>
+                <EditUser {...props} />
+              </ErrorBoundary>
             </div>
           )}
         />

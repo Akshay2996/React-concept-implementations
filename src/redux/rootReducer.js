@@ -26,7 +26,7 @@ const rootReducer = function users(state = initState, action) {
       newUsers.sort(function (a, b) {
         return b.id - a.id;
       });
-      return { users: newUsers, count: action.newUsers.count };
+      return { users: newUsers };
     default:
       return state;
   }

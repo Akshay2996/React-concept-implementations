@@ -20,7 +20,7 @@ export const receiveApiToken = (token) => {
 
 // Receive User here
 export const receiveUser = (users, limit, offset) => {
-  console.log("It working here...");
+  // console.log("It working here...");
   return {
     type: RECEIVE_USER,
     users: users.userList,
@@ -42,5 +42,5 @@ export const receiveRemoveUser = (id) => {
 
 // Receive Updated user here
 export const receiveUpdateUser = (users) => {
-  return { type: RECEIVE_UPDATE_USER, updateuser: users };
+  return { type: RECEIVE_UPDATE_USER, updateuser: users.userList };
 };

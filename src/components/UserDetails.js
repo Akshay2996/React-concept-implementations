@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useMemo, useRef } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { Link, withRouter, Redirect } from "react-router-dom";
 import "../styles/UserDetails.css";
 
-// function computeLongWord(users) {
-//   console.log("useMemo works", users);
-// }
-const limit = 3;
+const token = localStorage.getItem("token");
 function UserDetails(props) {
+  // console.log("User Details Function is running");
   // constructor(props) {
   //   super(props);
   //   const token = localStorage.getItem("token");
@@ -19,61 +17,55 @@ function UserDetails(props) {
   // }
 
   const [loggedIn, setLoggedIn] = useState(true);
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [num, setNum] = useState(1);
+  // const [reload, setReload] = useState(false);
+  
+  const [num, setNum] = useState(1);
   const [offset, setOffset] = useState(0);
-
-  // const indexOfLastUser = currentPage * limit;
-  // const indexOfFirstUser = indexOfLastUser - limit;
-  // const currentUsers = props.users.slice(indexOfFirstUser, indexOfLastUser);
+  // const [count, setCount] = useState(0);
+  const limit = 3;
 
   // Pagination concept here
   const pageNumber = [];
   let totalUser = props.count;
-  console.log(totalUser);
+  // console.log(totalUser);
   for (let i = 1; i <= Math.ceil(totalUser / limit); i++) {
     pageNumber.push(i);
   }
 
-  const handlePagination = (num) => {
+  // useEffect hook
+  useEffect(() => {
+    console.log("User Details Token: " + token);
+    if (token === null) {
+      setLoggedIn(false);
+      console.log("Token is not provided");
+    } else {
+      showUser(offset, limit);
+    }
+  }, []);
+
+  // Display User
+  const showUser = (offset, limit) => {
+    setLoggedIn(true);
+    console.log("Running because of useMemo", offset, limit);
+    props.displayUserData(offset, limit);
+    props.history.push("/user");
+  };
+
+  // UseMemo Hook
+  function handlePagination() {
     // console.log("Your Number is " + number);
+    console.log("working in useMemo");
     console.log("Num state" + num);
     let changePage = (num - 1) * limit;
-    console.log("change page is here" + changePage);
+    // console.log("change page is here" + changePage);
     setOffset(changePage);
     // setCurrentPage(number);
     showUser(offset, limit);
-  };
-  // const [reload, setReload] = useState(true);
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   console.log("User Details Token" + token);
-  //   // if (token === null) {
-  //   //   setLoggedIn(false);
-  //   //   console.log("Token is not provided");
-  //   // }
-  // }, []);
+  }
 
-  // function showUser() {
-  //   props.onShowUser();
-  // }
-
-  // const longWord = useMemo(() => {
-  //   computeLongWord(props.users);
-  // }, [props.users]);
-
-  const showUser = (offset, limit) => {
-    const token = localStorage.getItem("token");
-    if (token !== null) {
-      setLoggedIn(true);
-      console.log(offset, limit);
-      props.displayUserData(offset, limit);
-      props.history.push("/user");
-    } else {
-      setLoggedIn(false);
-      console.log("Token is not provided");
-    }
-  };
+  const handlepage = useMemo(() => {
+    return handlePagination();
+  }, [num, offset]);
 
   const deleteUser = (id) => {
     console.log("delete function Working...");
@@ -86,7 +78,6 @@ function UserDetails(props) {
     //   },
     // };
     // axios(config).then((response) => {
-    //   // console.log(response.data);
     //   props.handleUserDelete(response.data.id);
     // });
     props.removeUser(id);
@@ -107,15 +98,8 @@ function UserDetails(props) {
   //   }
   return (
     <div>
-      {/* <div>{longWord}</div> */}
-      <button
-        onClick={() => {
-          showUser(offset, limit);
-        }}
-      >
-        Show Users
-      </button>
-
+      {/* <button onClick={() => setCount(count + 1)}>Counter</button>
+      <div>Button Clicked {count} number of times</div> */}
       {loggedIn ? (
         <div className="user-details">
           <Link className="add-user" to="/adduser">
@@ -155,12 +139,13 @@ function UserDetails(props) {
                 <li key={number} className="page-item">
                   <button
                     onClick={() => {
-                      // setNum(number);
-                      handlePagination(number);
+                      setNum(number);
                     }}
                     className="page-link"
+                    href="!#"
                   >
                     {number}
+                    {handlepage}
                   </button>
                 </li>
               ))}

@@ -41,10 +41,6 @@ export const displayUserApi = (offset, limit) => {
     .catch((error) => console.log(error));
 };
 
-// headers:{
-//
-// }
-
 // addUser function
 export const addUserApi = (newuser) => {
   const { firstName, lastName, role, country } = newuser;
@@ -66,9 +62,8 @@ export const addUserApi = (newuser) => {
 
   return axios(config)
     .then((response) => {
-      // console.log(response.data);
-      console.log(response.data.userList);
-      return response.data.userList;
+      console.log(response.data);
+      return response.data;
     })
     .catch((error) => {
       console.log(error);
@@ -88,8 +83,8 @@ export const removeUserApi = (id) => {
   };
   return axios(config).then((response) => {
     // console.log(response.data);
-    console.log(response.data.userList);
-    return response.data.userList.id;
+    // console.log(response.data.userList);
+    return response.data.userList;
   });
 };
 
@@ -114,8 +109,8 @@ export const updateUserApi = (updateuser) => {
   return axios(config)
     .then((response) => {
       //   props.history.push("/user");
-      console.log(response.data.userList);
-      return response.data.userList;
+      console.log(response.data);
+      return response.data;
     })
     .catch((error) => {
       console.log(error);
