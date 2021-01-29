@@ -6,14 +6,14 @@ import * as actions from "./redux/actions";
 import { withRouter } from "react-router-dom";
 
 function mapStateToProps(state) {
-  return {
-    users: state.users,
-    count: state.count,
-  };
+	return {
+		users: state.users,
+		count: state.count,
+	};
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(actions, dispatch);
+	return bindActionCreators(actions, dispatch);
 }
 
 const App = withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
